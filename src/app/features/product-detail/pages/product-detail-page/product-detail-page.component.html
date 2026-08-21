@@ -1,0 +1,55 @@
+<div *ngIf="isLoading" class="state-container">
+  <p class="text-muted text-lg">Cargando detalles...</p>
+</div>
+
+<div *ngIf="error" class="state-container">
+  <p class="text-danger font-medium text-lg">Error al cargar el producto.</p>
+  <a routerLink="/" class="btn-primary mt-4">Volver al Catálogo</a>
+</div>
+
+<div *ngIf="product" class="product-detail">
+  <div class="breadcrumb">
+    <a routerLink="/" class="text-muted">Inicio</a> > 
+    <span>{{ product.name }}</span>
+  </div>
+
+  <div class="grid layout">
+    <!-- Image Gallery Section -->
+    <div class="image-section">
+      <div class="main-image-container">
+        <img 
+          [src]="product.imageUrl || 'assets/placeholder.jpg'" 
+          [alt]="product.name"
+          class="main-image"
+        >
+      </div>
+    </div>
+
+    <!-- Product Info Section -->
+    <div class="info-section">
+      <h1 class="text-4xl font-bold product-title">{{ product.name }}</h1>
+      
+      <div class="stock-status">
+        <span *ngIf="product.totalStock === 0" class="badge badge-danger">Agotado</span>
+        <span *ngIf="product.lowStock && product.totalStock > 0" class="badge badge-warning">Poco stock ({{ product.totalStock }})</span>
+      </div>
+
+      <p class="text-muted description">
+        Experimenta la calidad y diseño superior con nuestra última colección. 
+        Este producto ha sido confeccionado con los mejores materiales.
+      </p>
+
+      <app-variant-selector 
+        [variants]="product.variants"
+        (variantSelected)="onVariantSelected($event)">
+      </app-variant-selector>
+
+      <button 
+        class="btn-whatsapp btn-large w-full" 
+        [disabled]="!selectedVariant || selectedVariant.stock === 0"
+        (click)="openWhatsApp()">
+        {{ selectedVariant && selectedVariant.stock > 0 ? 'Comprar por WhatsApp' : (selectedVariant ? 'Sin Stock' : 'Selecciona opciones') }}
+      </button>
+    </div>
+  </div>
+</div>

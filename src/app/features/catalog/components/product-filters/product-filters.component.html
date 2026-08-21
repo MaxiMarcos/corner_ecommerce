@@ -1,0 +1,24 @@
+<div class="filters-container">
+  <h3 class="font-bold text-lg mb-4">Categorías</h3>
+  
+  <div *ngIf="isLoading" class="text-muted">Cargando categorías...</div>
+  
+  <ul class="category-list" *ngIf="!isLoading">
+    <li>
+      <button 
+        class="filter-btn" 
+        [class.active]="selectedCategoryId === null"
+        (click)="selectCategory(null)">
+        Todas las categorías
+      </button>
+    </li>
+    <li *ngFor="let category of categories">
+      <button 
+        class="filter-btn"
+        [class.active]="selectedCategoryId === category.id"
+        (click)="selectCategory(category.id)">
+        {{ category.name }}
+      </button>
+    </li>
+  </ul>
+</div>

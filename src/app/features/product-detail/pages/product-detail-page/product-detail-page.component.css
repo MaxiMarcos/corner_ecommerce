@@ -1,0 +1,119 @@
+.state-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.mt-4 {
+  margin-top: var(--spacing-4);
+  display: inline-block;
+}
+
+.product-detail {
+  padding: var(--spacing-6) 0;
+}
+
+.breadcrumb {
+  margin-bottom: var(--spacing-6);
+  font-size: var(--text-sm);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-8);
+}
+
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.image-section {
+  width: 100%;
+}
+
+.main-image-container {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--bg-tertiary);
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-title {
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-4);
+}
+
+.stock-status {
+  margin-bottom: var(--spacing-4);
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.badge-danger {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+.badge-warning {
+  background-color: rgba(245, 158, 11, 0.2);
+  color: var(--warning);
+  border: 1px solid var(--warning);
+}
+
+.description {
+  margin-bottom: var(--spacing-6);
+  line-height: 1.6;
+}
+
+.btn-large {
+  padding: var(--spacing-4);
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.btn-whatsapp {
+  background-color: #25D366;
+  color: white;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 14px 0 rgba(37, 211, 102, 0.4);
+}
+
+.btn-whatsapp:hover:not(:disabled) {
+  background-color: #20BA5A;
+  transform: translateY(-1px);
+}
+
+.w-full {
+  width: 100%;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--bg-tertiary);
+  box-shadow: none;
+  color: var(--text-secondary);
+}

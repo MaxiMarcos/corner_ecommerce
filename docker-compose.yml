@@ -1,0 +1,7 @@
+services:
+  corner-ecommerce:
+    build: .
+    container_name: corner-ecommerce
+    restart: always
+    ports:
+      - "4200:80"
