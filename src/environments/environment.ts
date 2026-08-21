@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://149.50.152.80:9016/api/v1'
+  apiUrl: 'http://indumentariacorner.com.ar/api/v1'
 };
