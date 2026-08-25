@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { CategoryApiService } from '../../../data-access/api/category-api.service';
 import { SubCategoryApiService } from '../../../data-access/api/subcategory-api.service';
@@ -6,7 +7,7 @@ import { SubCategoryApiService } from '../../../data-access/api/subcategory-api.
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -17,6 +18,7 @@ export class HeaderComponent implements OnInit {
 
   categories: any[] = [];
   subCategories: any[] = [];
+  isMenuOpen: boolean = false;
 
   ngOnInit(): void {
     this.categoryApi.getCategories(0, 1000).subscribe(res => this.categories = res.content);
@@ -39,5 +41,9 @@ export class HeaderComponent implements OnInit {
       queryParams: { keyword: keyword || null },
       queryParamsHandling: 'merge'
     });
+  }
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }
