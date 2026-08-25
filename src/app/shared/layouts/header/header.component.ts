@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { CategoryApiService } from '../../../../data-access/api/category-api.service';
-import { SubCategoryApiService } from '../../../../data-access/api/subcategory-api.service';
+import { CategoryApiService } from '../../../data-access/api/category-api.service';
+import { SubCategoryApiService } from '../../../data-access/api/subcategory-api.service';
 
 @Component({
   selector: 'app-header',
