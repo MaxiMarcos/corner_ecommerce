@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductApiService } from '../../../../data-access/api/product-api.service';
@@ -12,7 +12,7 @@ import { ProductGridComponent } from '../../components/product-grid/product-grid
   templateUrl: './catalog-page.component.html',
   styleUrl: './catalog-page.component.css'
 })
-export class CatalogPageComponent implements OnInit {
+export class CatalogPageComponent implements OnInit, OnDestroy {
   private productService = inject(ProductApiService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -25,22 +25,45 @@ export class CatalogPageComponent implements OnInit {
   totalPages = 0;
   pageSize = 8; // Number of items per page
 
+  // Carousel Properties
+  carouselImages = [
+    'assets/images/carruselCamisetas.jpg',
+    'assets/images/carruselLocal.jpg'
+  ];
+  currentCarouselIndex = 0;
+  private carouselTimer: any;
+
   ngOnInit(): void {
+    this.startCarousel();
     // Subscribe to query params to reload data when pagination/search changes
     this.route.queryParams.subscribe(params => {
       const keyword = params['keyword'];
+      const categoryId = params['categoryId'] ? Number(params['categoryId']) : undefined;
+      const subCategoryId = params['subCategoryId'] ? Number(params['subCategoryId']) : undefined;
       this.currentPage = params['page'] ? Number(params['page']) : 0;
       
-      this.loadProducts(keyword);
+      this.loadProducts(keyword, categoryId, subCategoryId);
     });
   }
 
-  private loadProducts(keyword?: string): void {
+  startCarousel(): void {
+    this.carouselTimer = setInterval(() => {
+      this.currentCarouselIndex = (this.currentCarouselIndex + 1) % this.carouselImages.length;
+    }, 5000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.carouselTimer) {
+      clearInterval(this.carouselTimer);
+    }
+  }
+
+  private loadProducts(keyword?: string, categoryId?: number, subCategoryId?: number): void {
     this.isLoading = true;
     this.error = false;
     
     // Fetch paginated products
-    this.productService.getProducts(this.currentPage, this.pageSize, keyword).subscribe({
+    this.productService.getProducts(this.currentPage, this.pageSize, keyword, categoryId, subCategoryId).subscribe({
       next: (response) => {
         this.products = response.content;
         this.totalPages = response.totalPages;

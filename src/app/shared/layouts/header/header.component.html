@@ -4,21 +4,48 @@
       <div class="logo-icon"></div>
       <span class="font-bold text-xl">Corner</span>
     </a>
-    
+
     <div class="search-bar">
-      <input 
-        type="text" 
-        placeholder="Buscar productos..." 
-        class="search-input"
-        #searchInput
-        (keyup.enter)="onSearch($event, searchInput.value)"
-      >
+      <input type="text" placeholder="Buscar productos..." class="search-input" #searchInput
+        (keyup.enter)="onSearch($event, searchInput.value)">
       <button class="btn-primary search-btn" (click)="onSearch($event, searchInput.value)">Buscar</button>
     </div>
-    
+
     <nav class="nav-links">
-      <a routerLink="/">Catálogo</a>
-      <a routerLink="/about" class="text-muted">Nosotros</a>
+      <div class="dropdown">
+        <a class="dropdown-toggle" routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Internacionales')}">Equipos Internacionales</a>
+        <div class="dropdown-menu">
+          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Internacionales'), subCategoryId: getSubCategoryId('Camisetas')}">Camisetas</a>
+          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Internacionales'), subCategoryId: getSubCategoryId('Shorts')}">Shorts</a>
+          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Internacionales'), subCategoryId: getSubCategoryId('Camperas')}">Camperas</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a class="dropdown-toggle" routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Nacionales')}">Equipos Nacionales</a>
+        <div class="dropdown-menu">
+          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Nacionales'), subCategoryId: getSubCategoryId('Camisetas')}">Camisetas</a>
+          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Nacionales'), subCategoryId: getSubCategoryId('Shorts')}">Shorts</a>
+          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Nacionales'), subCategoryId: getSubCategoryId('Camperas')}">Camperas</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a class="dropdown-toggle" routerLink="/" [queryParams]="{categoryId: getCategoryId('Selecciones')}">Selecciones</a>
+        <div class="dropdown-menu">
+          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Selecciones'), subCategoryId: getSubCategoryId('Camisetas')}">Camisetas</a>
+          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Selecciones'), subCategoryId: getSubCategoryId('Shorts')}">Shorts</a>
+          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Selecciones'), subCategoryId: getSubCategoryId('Camperas')}">Camperas</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a class="dropdown-toggle" routerLink="/">Más</a>
+        <div class="dropdown-menu">
+          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('LEVIS')}">LEVIS</a>
+          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('ADIDAS')}">ADIDAS</a>
+        </div>
+      </div>
     </nav>
   </div>
 </header>

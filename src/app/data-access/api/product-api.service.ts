@@ -19,13 +19,19 @@ export class ProductApiService {
    * @param size Number of items per page
    * @param keyword Optional search keyword
    */
-  getProducts(page: number = 0, size: number = 10, keyword?: string): Observable<PaginatedResponse<Product>> {
+  getProducts(page: number = 0, size: number = 10, keyword?: string, categoryId?: number, subCategoryId?: number): Observable<PaginatedResponse<Product>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
       
     if (keyword) {
       params = params.set('keyword', keyword);
+    }
+    if (categoryId !== undefined && categoryId !== null) {
+      params = params.set('categoryId', categoryId.toString());
+    }
+    if (subCategoryId !== undefined && subCategoryId !== null) {
+      params = params.set('subCategoryId', subCategoryId.toString());
     }
 
     return this.http.get<PaginatedResponse<Product>>(this.BASE_URL, { params });

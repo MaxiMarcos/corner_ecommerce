@@ -3,17 +3,17 @@
 
 /* CSS Variables - Premium Dark Mode Design System */
 :root {
-  /* Color Palette */
-  --bg-primary: #0f172a;      /* Deep slate dark */
-  --bg-secondary: #1e293b;    /* Slightly lighter slate for cards/surfaces */
-  --bg-tertiary: #334155;     /* Hover states, borders */
+  /* Color Palette - Light Theme */
+  --bg-primary: #ffffff;      /* Pure white background */
+  --bg-secondary: #f8fafc;    /* Very light gray for cards/surfaces */
+  --bg-tertiary: #e2e8f0;     /* Borders and hover states */
   
-  --text-primary: #f8fafc;    /* Off-white for high readability */
-  --text-secondary: #94a3b8;  /* Muted text for descriptions/subtitles */
+  --text-primary: #0f172a;    /* Dark slate for high readability */
+  --text-secondary: #475569;  /* Muted text for descriptions/subtitles */
   
   --accent-primary: #3b82f6;  /* Vibrant blue for primary actions */
   --accent-hover: #2563eb;    /* Darker blue for hover states */
-  --accent-glow: rgba(59, 130, 246, 0.5); /* Glow effect for buttons/cards */
+  --accent-glow: rgba(59, 130, 246, 0.25); /* Lighter glow effect */
   
   --success: #10b981;
   --danger: #ef4444;

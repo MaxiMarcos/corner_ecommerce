@@ -1,9 +1,26 @@
-<div class="catalog-header">
-  <h1 class="text-3xl font-bold">Últimos Productos</h1>
-  <p class="text-muted">Descubre nuestra colección premium de ropa.</p>
+<!-- Hero Carousel -->
+<div class="hero-carousel">
+  <div class="carousel-slide" *ngFor="let image of carouselImages; let i = index" [class.active]="i === currentCarouselIndex">
+    <div class="carousel-overlay"></div>
+    <img [src]="image" alt="Carousel image" class="carousel-image">
+  </div>
+  
+  <div class="carousel-content">
+    <h1 class="hero-title">Indumentaria Corner</h1>
+    <p class="hero-subtitle">Futbol y estilo</p>
+  </div>
+  
+  <div class="carousel-indicators">
+    <span class="indicator" *ngFor="let img of carouselImages; let i = index" [class.active]="i === currentCarouselIndex" (click)="currentCarouselIndex = i"></span>
+  </div>
 </div>
 
-<div class="catalog-layout">
+<div class="catalog-header container">
+  <h2 class="text-3xl font-bold mt-8">Últimos Productos</h2>
+  <p class="text-muted">Descubre nuestra colección de ropa.</p>
+</div>
+
+<div class="catalog-layout container">
   <!-- Main Content -->
   <main class="catalog-content">
     <div *ngIf="error" class="error-state">
