@@ -43,12 +43,22 @@
         (variantSelected)="onVariantSelected($event)">
       </app-variant-selector>
 
-      <button 
-        class="btn-whatsapp btn-large w-full" 
-        [disabled]="!selectedVariant || selectedVariant.stock === 0"
-        (click)="openWhatsApp()">
-        {{ selectedVariant && selectedVariant.stock > 0 ? 'Comprar por WhatsApp' : (selectedVariant ? 'Sin Stock' : 'Selecciona opciones') }}
-      </button>
+      <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+        <button 
+          class="btn-primary btn-large w-full" 
+          style="background-color: #009ee3; border-color: #009ee3;"
+          [disabled]="!selectedVariant || selectedVariant.stock === 0 || isProcessingPayment"
+          (click)="buyNow()">
+          {{ isProcessingPayment ? 'Procesando...' : (selectedVariant && selectedVariant.stock > 0 ? 'Comprar con Mercado Pago' : 'Selecciona opciones') }}
+        </button>
+
+        <button 
+          class="btn-whatsapp btn-large w-full" 
+          [disabled]="!selectedVariant || selectedVariant.stock === 0"
+          (click)="openWhatsApp()">
+          Comprar por WhatsApp
+        </button>
+      </div>
     </div>
   </div>
 </div>

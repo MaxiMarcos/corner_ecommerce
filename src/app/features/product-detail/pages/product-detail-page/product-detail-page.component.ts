@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProductApiService } from '../../../../data-access/api/product-api.service';
+import { PaymentApiService } from '../../../../data-access/api/payment-api.service';
 import { Product, ProductVariant } from '../../../../data-access/models/product.model';
 import { VariantSelectorComponent } from '../../components/variant-selector/variant-selector.component';
 
@@ -15,11 +16,13 @@ import { VariantSelectorComponent } from '../../components/variant-selector/vari
 export class ProductDetailPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private productService = inject(ProductApiService);
+  private paymentService = inject(PaymentApiService);
 
   product: Product | null = null;
   isLoading = true;
   error = false;
   selectedVariant: ProductVariant | null = null;
+  isProcessingPayment = false;
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -49,6 +52,29 @@ export class ProductDetailPageComponent implements OnInit {
 
   onVariantSelected(variant: ProductVariant | null): void {
     this.selectedVariant = variant;
+  }
+
+  buyNow(): void {
+    if (!this.product || !this.selectedVariant) return;
+    
+    this.isProcessingPayment = true;
+    
+    this.paymentService.createPreference({
+      items: [{
+        productVariantId: this.selectedVariant.id,
+        quantity: 1
+      }]
+    }).subscribe({
+      next: (res) => {
+        // Redirigir a Mercado Pago
+        window.location.href = res.initPoint;
+      },
+      error: (err) => {
+        console.error('Error creating payment preference', err);
+        this.isProcessingPayment = false;
+        alert('Hubo un error al procesar el pago. Por favor intenta de nuevo.');
+      }
+    });
   }
 
   openWhatsApp(): void {
