@@ -47,9 +47,9 @@
         <button 
           class="btn-primary btn-large w-full" 
           style="background-color: #009ee3; border-color: #009ee3;"
-          [disabled]="!selectedVariant || selectedVariant.stock === 0 || isProcessingPayment"
-          (click)="buyNow()">
-          {{ isProcessingPayment ? 'Procesando...' : (selectedVariant && selectedVariant.stock > 0 ? 'Comprar con Mercado Pago' : 'Selecciona opciones') }}
+          [disabled]="!selectedVariant || selectedVariant.stock === 0"
+          (click)="addToCart()">
+          {{ (selectedVariant && selectedVariant.stock > 0 ? 'Agregar al carrito' : 'Elegir talle disponible') }}
         </button>
 
         <button 

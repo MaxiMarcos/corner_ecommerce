@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { CategoryApiService } from '../../../data-access/api/category-api.service';
 import { SubCategoryApiService } from '../../../data-access/api/subcategory-api.service';
+import { CartService } from '../../../data-access/services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,7 @@ export class HeaderComponent implements OnInit {
   private router = inject(Router);
   private categoryApi = inject(CategoryApiService);
   private subCategoryApi = inject(SubCategoryApiService);
+  cartService = inject(CartService);
 
   categories: any[] = [];
   subCategories: any[] = [];
