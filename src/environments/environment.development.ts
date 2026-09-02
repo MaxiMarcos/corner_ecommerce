@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://admin.indumentariacorner.com.ar/api/v1'
+  apiUrl: 'http://localhost:9016/api/v1'
 };
