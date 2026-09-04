@@ -34,8 +34,8 @@
         <span *ngIf="product.lowStock && product.totalStock > 0" class="badge badge-warning">Poco stock ({{ product.totalStock }})</span>
       </div>
 
-      <p class="text-muted description">
-        <!-- traer product.description -->. 
+      <p class="text-muted description" *ngIf="product.description">
+        {{ product.description }}
       </p>
 
       <app-variant-selector 

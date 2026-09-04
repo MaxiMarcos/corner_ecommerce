@@ -20,8 +20,16 @@ export class CartService {
     return this.cartItemsSignal().reduce((total, item) => total + item.quantity, 0);
   });
 
-  totalPrice = computed(() => {
+  subtotalPrice = computed(() => {
     return this.cartItemsSignal().reduce((total, item) => total + (item.variant.salePrice * item.quantity), 0);
+  });
+
+  discountAmount = computed(() => {
+    return this.totalItems() > 2 ? this.subtotalPrice() * 0.20 : 0;
+  });
+
+  totalPrice = computed(() => {
+    return this.subtotalPrice() - this.discountAmount();
   });
 
   constructor() { }

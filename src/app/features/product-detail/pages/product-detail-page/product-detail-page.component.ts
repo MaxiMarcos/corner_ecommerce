@@ -63,8 +63,8 @@ export class ProductDetailPageComponent implements OnInit {
   openWhatsApp(): void {
     if (!this.product || !this.selectedVariant) return;
 
-    const phoneNumber = '5493517614221'; // Removed +, added 9 for Argentina standard WA routing if needed, but 543517614221 usually works too. Let's use exactly 543517614221
-    const exactNumber = '543517614221';
+    const phoneNumber = '5493515637590';
+    const exactNumber = '5493515637590';
     const message = `Hola! Me interesa comprar el producto *${this.product.name}*\n- Talle: ${this.selectedVariant.size}\n- Color: ${this.selectedVariant.color}\n- Precio: $${this.selectedVariant.salePrice}`;
     const encodedMessage = encodeURIComponent(message);
     

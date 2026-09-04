@@ -39,7 +39,25 @@
   </div>
 
   <div class="cart-footer" *ngIf="cartService.cartItems().length > 0">
-    <div class="total-row">
+    <div class="promo-banner" *ngIf="cartService.totalItems() <= 2">
+      <p>¡Agrega {{ 3 - cartService.totalItems() }} producto(s) más para obtener un <strong>20% de descuento</strong>!</p>
+    </div>
+    
+    <div class="promo-success" *ngIf="cartService.totalItems() > 2">
+      <p>🎉 ¡Felicidades! Tienes un 20% de descuento aplicado.</p>
+    </div>
+
+    <div class="total-row" *ngIf="cartService.totalItems() > 2">
+      <span>Subtotal:</span>
+      <span class="subtotal-price" style="text-decoration: line-through; color: var(--text-muted);">${{ cartService.subtotalPrice() | number }}</span>
+    </div>
+
+    <div class="total-row" *ngIf="cartService.totalItems() > 2" style="color: var(--success, #28a745); font-size: 1rem;">
+      <span>Descuento (20%):</span>
+      <span>-${{ cartService.discountAmount() | number }}</span>
+    </div>
+
+    <div class="total-row" style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border);">
       <span>Total:</span>
       <span class="total-price">${{ cartService.totalPrice() | number }}</span>
     </div>

@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 })
 export class FooterComponent {
   // Variables for easy modification
-  whatsappNumber = '5493517614221'; // Reemplazar con el número final
+  whatsappNumber = '5493515637590'; // Reemplazar con el número final
   instagramUser = 'indumentariacorner';
   year = new Date().getFullYear();
 

@@ -43,6 +43,16 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
       this.currentPage = params['page'] ? Number(params['page']) : 0;
       
       this.loadProducts(keyword, categoryId, subCategoryId);
+
+      if (keyword || categoryId || subCategoryId) {
+        setTimeout(() => {
+          const element = document.getElementById('catalog-header');
+          if (element) {
+            const y = element.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }, 100);
+      }
     });
   }
 

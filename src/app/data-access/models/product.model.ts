@@ -10,7 +10,8 @@ export interface ProductVariant {
 export interface Product {
   id: number;
   name: string;
-  imageUrl: string;
+  description?: string;
+  imageUrl?: string;
   totalStock: number;
   lowStock: boolean;
   categoryId: number;
