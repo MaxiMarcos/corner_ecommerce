@@ -28,7 +28,7 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
   // Carousel Properties
   carouselImages = [
     'assets/images/carruselCamisetas.jpg',
-    'assets/images/carruselLocal.jpg'
+    'assets/images/carruselDiego.jpg'
   ];
   currentCarouselIndex = 0;
   private carouselTimer: any;
