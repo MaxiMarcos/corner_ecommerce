@@ -22,4 +22,12 @@ export class ProductCardComponent {
     if (!this.product.variants || this.product.variants.length === 0) return 0;
     return Math.max(...this.product.variants.map(v => v.salePrice));
   }
+
+  get productSlug(): string {
+    if (!this.product || !this.product.name) return `${this.product.id}`;
+    const slug = this.product.name.toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '');
+    return `${this.product.id}-${slug}`;
+  }
 }

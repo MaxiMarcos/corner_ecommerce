@@ -1,7 +1,7 @@
-<div class="card" [routerLink]="['/product', product.id]">
+<div class="card" [routerLink]="['/product', productSlug]">
   <div class="card-image-container">
     <img 
-      [src]="product.imageUrl || 'assets/placeholder.jpg'" 
+      [src]="product.imageUrl || 'assets/images/corner.jpg'" 
       [alt]="product.name"
       class="card-image"
       loading="lazy"

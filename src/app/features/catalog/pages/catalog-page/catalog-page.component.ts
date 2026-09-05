@@ -35,16 +35,15 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.startCarousel();
-    // Subscribe to query params to reload data when pagination/search changes
     this.route.queryParams.subscribe(params => {
       const keyword = params['keyword'];
-      const categoryId = params['categoryId'] ? Number(params['categoryId']) : undefined;
-      const subCategoryId = params['subCategoryId'] ? Number(params['subCategoryId']) : undefined;
+      const categoryName = params['categoria'];
+      const subCategoryName = params['subcategoria'];
       this.currentPage = params['page'] ? Number(params['page']) : 0;
       
-      this.loadProducts(keyword, categoryId, subCategoryId);
+      this.loadProducts(keyword, categoryName, subCategoryName);
 
-      if (keyword || categoryId || subCategoryId) {
+      if (keyword || categoryName || subCategoryName) {
         setTimeout(() => {
           const element = document.getElementById('catalog-header');
           if (element) {
@@ -68,12 +67,12 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  private loadProducts(keyword?: string, categoryId?: number, subCategoryId?: number): void {
+  private loadProducts(keyword?: string, categoryName?: string, subCategoryName?: string): void {
     this.isLoading = true;
     this.error = false;
     
     // Fetch paginated products
-    this.productService.getProducts(this.currentPage, this.pageSize, keyword, categoryId, subCategoryId).subscribe({
+    this.productService.getProducts(this.currentPage, this.pageSize, keyword, categoryName, subCategoryName).subscribe({
       next: (response) => {
         this.products = response.content;
         this.totalPages = response.totalPages;

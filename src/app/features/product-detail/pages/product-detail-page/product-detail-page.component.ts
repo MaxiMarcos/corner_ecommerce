@@ -27,9 +27,12 @@ export class ProductDetailPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.loadProduct(Number(id));
+      const slugOrId = params.get('id');
+      if (slugOrId) {
+        const id = parseInt(slugOrId, 10);
+        if (!isNaN(id)) {
+          this.loadProduct(id);
+        }
       }
     });
   }

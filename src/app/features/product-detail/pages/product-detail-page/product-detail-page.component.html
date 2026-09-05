@@ -18,7 +18,7 @@
     <div class="image-section">
       <div class="main-image-container">
         <img 
-          [src]="product.imageUrl || 'assets/placeholder.jpg'" 
+          [src]="product.imageUrl || 'assets/images/corner.jpg'" 
           [alt]="product.name"
           class="main-image"
         >
@@ -29,10 +29,10 @@
     <div class="info-section">
       <h1 class="text-4xl font-bold product-title">{{ product.name }}</h1>
       
-      <div class="stock-status">
+      <!-- Product Info Section<div class="stock-status">
         <span *ngIf="product.totalStock === 0" class="badge badge-danger">Agotado</span>
         <span *ngIf="product.lowStock && product.totalStock > 0" class="badge badge-warning">Poco stock ({{ product.totalStock }})</span>
-      </div>
+      </div> -->
 
       <p class="text-muted description" *ngIf="product.description">
         {{ product.description }}

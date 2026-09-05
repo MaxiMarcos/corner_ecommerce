@@ -1,3 +1,6 @@
+<div class="promo-banner" style="background-color: var(--primary); color: white; text-align: center; padding: 8px; font-size: 14px; font-weight: bold; width: 100%;">
+  🔥 ¡Llevando 3 o más prendas tenés un 20% de descuento en tu compra! 🔥
+</div>
 <header class="header">
   <div class="container header-content">
     <a routerLink="/" class="logo flex items-center gap-2">
@@ -13,37 +16,37 @@
 
     <nav class="nav-links" [class.active]="isMenuOpen">
       <div class="dropdown">
-        <a class="dropdown-toggle" routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Internacionales')}">Equipos Internacionales</a>
+        <a class="dropdown-toggle" routerLink="/" [queryParams]="{categoria: 'equipos-internacionales'}">Equipos Internacionales</a>
         <div class="dropdown-menu">
-          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Internacionales'), subCategoryId: getSubCategoryId('Camisetas')}">Camisetas</a>
-          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Internacionales'), subCategoryId: getSubCategoryId('Shorts')}">Shorts</a>
-          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Internacionales'), subCategoryId: getSubCategoryId('Camperas')}">Camperas</a>
+          <a routerLink="/" [queryParams]="{categoria: 'equipos-internacionales', subcategoria: 'camisetas'}">Camisetas</a>
+          <a routerLink="/" [queryParams]="{categoria: 'equipos-internacionales', subcategoria: 'shorts'}">Shorts</a>
+          <a routerLink="/" [queryParams]="{categoria: 'equipos-internacionales', subcategoria: 'camperas'}">Camperas</a>
         </div>
       </div>
 
       <div class="dropdown">
-        <a class="dropdown-toggle" routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Nacionales')}">Equipos Nacionales</a>
+        <a class="dropdown-toggle" routerLink="/" [queryParams]="{categoria: 'equipos-nacionales'}">Equipos Nacionales</a>
         <div class="dropdown-menu">
-          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Nacionales'), subCategoryId: getSubCategoryId('Camisetas')}">Camisetas</a>
-          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Nacionales'), subCategoryId: getSubCategoryId('Shorts')}">Shorts</a>
-          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Equipos Nacionales'), subCategoryId: getSubCategoryId('Camperas')}">Camperas</a>
+          <a routerLink="/" [queryParams]="{categoria: 'equipos-nacionales', subcategoria: 'camisetas'}">Camisetas</a>
+          <a routerLink="/" [queryParams]="{categoria: 'equipos-nacionales', subcategoria: 'shorts'}">Shorts</a>
+          <a routerLink="/" [queryParams]="{categoria: 'equipos-nacionales', subcategoria: 'camperas'}">Camperas</a>
         </div>
       </div>
 
       <div class="dropdown">
-        <a class="dropdown-toggle" routerLink="/" [queryParams]="{categoryId: getCategoryId('Selecciones')}">Selecciones</a>
+        <a class="dropdown-toggle" routerLink="/" [queryParams]="{categoria: 'selecciones'}">Selecciones</a>
         <div class="dropdown-menu">
-          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Selecciones'), subCategoryId: getSubCategoryId('Camisetas')}">Camisetas</a>
-          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Selecciones'), subCategoryId: getSubCategoryId('Shorts')}">Shorts</a>
-          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('Selecciones'), subCategoryId: getSubCategoryId('Camperas')}">Camperas</a>
+          <a routerLink="/" [queryParams]="{categoria: 'selecciones', subcategoria: 'camisetas'}">Camisetas</a>
+          <a routerLink="/" [queryParams]="{categoria: 'selecciones', subcategoria: 'shorts'}">Shorts</a>
+          <a routerLink="/" [queryParams]="{categoria: 'selecciones', subcategoria: 'camperas'}">Camperas</a>
         </div>
       </div>
 
       <div class="dropdown">
         <a class="dropdown-toggle" routerLink="/">Más</a>
         <div class="dropdown-menu">
-          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('LEVIS')}">LEVIS</a>
-          <a routerLink="/" [queryParams]="{categoryId: getCategoryId('ADIDAS')}">ADIDAS</a>
+          <a routerLink="/" [queryParams]="{categoria: 'levis'}">LEVIS</a>
+          <a routerLink="/" [queryParams]="{categoria: 'adidas'}">ADIDAS</a>
         </div>
       </div>
     </nav>

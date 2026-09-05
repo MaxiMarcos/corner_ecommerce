@@ -12,7 +12,7 @@
 
     <div class="cart-items" *ngIf="cartService.cartItems().length > 0">
       <div class="cart-item" *ngFor="let item of cartService.cartItems()">
-        <img [src]="item.product.imageUrl || 'assets/placeholder.jpg'" [alt]="item.product.name" class="item-img">
+        <img [src]="item.product.imageUrl || 'assets/images/corner.jpg'" [alt]="item.product.name" class="item-img">
         
         <div class="item-details">
           <h4 class="item-title">{{ item.product.name }}</h4>
