@@ -55,7 +55,7 @@ export class CheckoutPageComponent implements OnInit {
   }
 
   get totalWithShipping(): number {
-    return this.cartService.cartTotal() + this.shippingCost;
+    return this.cartService.subtotalPrice() + this.shippingCost;
   }
 
   onSubmit(): void {
