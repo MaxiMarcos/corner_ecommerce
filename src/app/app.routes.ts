@@ -11,6 +11,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/product-detail/pages/product-detail-page/product-detail-page.component').then(m => m.ProductDetailPageComponent).catch(() => import('./features/catalog/pages/catalog-page/catalog-page.component').then(m => m.CatalogPageComponent))
   },
   {
+    path: 'checkout',
+    loadComponent: () => import('./features/checkout/pages/checkout-page/checkout-page.component').then(m => m.CheckoutPageComponent)
+  },
+  {
     path: '**',
     redirectTo: ''
   }

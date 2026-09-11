@@ -10,6 +10,14 @@ export interface PaymentItemDto {
 
 export interface PaymentRequestDto {
   items: PaymentItemDto[];
+  buyerName: string;
+  buyerLastName: string;
+  buyerEmail: string;
+  buyerPhone: string;
+  deliveryMethod: string;
+  address?: string | null;
+  city?: string | null;
+  zipCode?: string | null;
 }
 
 export interface PaymentResponseDto {

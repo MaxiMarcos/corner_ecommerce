@@ -1,0 +1,123 @@
+<div class="checkout-container container">
+  <div class="checkout-header">
+    <h1>Finalizar Compra</h1>
+    <a routerLink="/" class="back-link">&larr; Volver a la tienda</a>
+  </div>
+
+  <div class="checkout-content">
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form">
+      
+      <!-- Sección 1: Datos del Comprador -->
+      <section class="checkout-section">
+        <h2>1. Datos del Comprador</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="buyerName">Nombre</label>
+            <input type="text" id="buyerName" formControlName="buyerName" class="form-control" [class.is-invalid]="checkoutForm.get('buyerName')?.invalid && checkoutForm.get('buyerName')?.touched">
+            <div class="error-msg" *ngIf="checkoutForm.get('buyerName')?.invalid && checkoutForm.get('buyerName')?.touched">Nombre es requerido</div>
+          </div>
+          <div class="form-group">
+            <label for="buyerLastName">Apellido</label>
+            <input type="text" id="buyerLastName" formControlName="buyerLastName" class="form-control" [class.is-invalid]="checkoutForm.get('buyerLastName')?.invalid && checkoutForm.get('buyerLastName')?.touched">
+            <div class="error-msg" *ngIf="checkoutForm.get('buyerLastName')?.invalid && checkoutForm.get('buyerLastName')?.touched">Apellido es requerido</div>
+          </div>
+          <div class="form-group">
+            <label for="buyerEmail">Email</label>
+            <input type="email" id="buyerEmail" formControlName="buyerEmail" class="form-control" [class.is-invalid]="checkoutForm.get('buyerEmail')?.invalid && checkoutForm.get('buyerEmail')?.touched">
+            <div class="error-msg" *ngIf="checkoutForm.get('buyerEmail')?.invalid && checkoutForm.get('buyerEmail')?.touched">Email válido es requerido</div>
+          </div>
+          <div class="form-group">
+            <label for="buyerPhone">Teléfono</label>
+            <input type="tel" id="buyerPhone" formControlName="buyerPhone" class="form-control" [class.is-invalid]="checkoutForm.get('buyerPhone')?.invalid && checkoutForm.get('buyerPhone')?.touched">
+            <div class="error-msg" *ngIf="checkoutForm.get('buyerPhone')?.invalid && checkoutForm.get('buyerPhone')?.touched">Teléfono es requerido</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección 2: Entrega -->
+      <section class="checkout-section">
+        <h2>2. Método de Entrega</h2>
+        <div class="delivery-options">
+          <label class="radio-label">
+            <input type="radio" formControlName="deliveryMethod" value="LOCAL_PICKUP">
+            <div class="radio-content">
+              <strong>Retiro en Local</strong>
+              <p class="text-muted">Manzana 67, Lote 3 (Local N°2), Barrio Docta</p>
+            </div>
+          </label>
+          <label class="radio-label">
+            <input type="radio" formControlName="deliveryMethod" value="HOME_DELIVERY">
+            <div class="radio-content">
+              <strong>Envío a Domicilio</strong>
+              <p class="text-muted">A cargo del comprador</p>
+            </div>
+          </label>
+        </div>
+
+        <div class="address-fields" *ngIf="checkoutForm.get('deliveryMethod')?.value === 'HOME_DELIVERY'">
+          <h3>Datos de Envío</h3>
+          <div class="form-group">
+            <label for="address">Dirección completa (Calle, número, piso/depto)</label>
+            <input type="text" id="address" formControlName="address" class="form-control" [class.is-invalid]="checkoutForm.get('address')?.invalid && checkoutForm.get('address')?.touched">
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="city">Ciudad / Localidad</label>
+              <input type="text" id="city" formControlName="city" class="form-control" [class.is-invalid]="checkoutForm.get('city')?.invalid && checkoutForm.get('city')?.touched">
+            </div>
+            <div class="form-group">
+              <label for="zipCode">Código Postal</label>
+              <input type="text" id="zipCode" formControlName="zipCode" class="form-control" [class.is-invalid]="checkoutForm.get('zipCode')?.invalid && checkoutForm.get('zipCode')?.touched">
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </form>
+
+    <!-- Sección 3: Resumen -->
+    <div class="checkout-summary">
+      <h2>Resumen de Compra</h2>
+      <div class="summary-items">
+        <div class="summary-item" *ngFor="let item of cartService.cartItems()">
+          <img [src]="item.product.imageUrl || 'assets/images/corner.jpg'" [alt]="item.product.name" class="summary-item-img">
+          <div class="summary-item-details">
+            <h4>{{ item.product.name }}</h4>
+            <p class="text-muted text-sm">Talle: {{ item.variant.size }} | Color: {{ item.variant.color }}</p>
+            <p class="text-sm">Cant: {{ item.quantity }}</p>
+          </div>
+          <div class="summary-item-price">
+            {{ (item.variant.salePrice * item.quantity) | currency }}
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-totals">
+        <div class="total-row">
+          <span>Subtotal</span>
+          <span>{{ cartService.cartTotal() | currency }}</span>
+        </div>
+        
+        <div class="total-row">
+          <span>Envío</span>
+          <span *ngIf="shippingCost > 0">{{ shippingCost | currency }}</span>
+          <span *ngIf="shippingCost === 0">A convenir</span>
+        </div>
+        
+        <div class="total-row grand-total">
+          <span>TOTAL</span>
+          <span>{{ totalWithShipping | currency }}</span>
+        </div>
+      </div>
+
+      <button 
+        type="button" 
+        class="btn-primary btn-block checkout-btn" 
+        (click)="onSubmit()" 
+        [disabled]="isProcessingPayment">
+        <span *ngIf="!isProcessingPayment">Continuar con Mercado Pago</span>
+        <span *ngIf="isProcessingPayment">Procesando...</span>
+      </button>
+    </div>
+  </div>
+</div>

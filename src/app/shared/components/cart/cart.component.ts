@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../../data-access/services/cart.service';
 import { PaymentApiService } from '../../../data-access/api/payment-api.service';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -12,7 +14,7 @@ import { PaymentApiService } from '../../../data-access/api/payment-api.service'
 })
 export class CartComponent {
   cartService = inject(CartService);
-  private paymentService = inject(PaymentApiService);
+  private router = inject(Router);
 
   isProcessingPayment = false;
 
@@ -20,23 +22,10 @@ export class CartComponent {
     const items = this.cartService.cartItems();
     if (items.length === 0) return;
 
-    this.isProcessingPayment = true;
-
-    const paymentItems = items.map(item => ({
-      productVariantId: item.variant.id,
-      quantity: item.quantity
-    }));
-
-    this.paymentService.createPreference({ items: paymentItems }).subscribe({
-      next: (res) => {
-        // Redirigir a Mercado Pago
-        window.location.href = res.initPoint;
-      },
-      error: (err) => {
-        console.error('Error creating payment preference', err);
-        this.isProcessingPayment = false;
-        alert('Hubo un error al procesar el pago. Por favor intenta de nuevo.');
-      }
-    });
+    // Close the cart before navigating
+    this.cartService.toggleCart();
+    
+    // Navigate to checkout
+    this.router.navigate(['/checkout']);
   }
 }
