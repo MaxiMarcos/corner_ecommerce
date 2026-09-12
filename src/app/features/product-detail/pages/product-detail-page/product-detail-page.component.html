@@ -28,12 +28,10 @@
     <!-- Product Info Section -->
     <div class="info-section">
       <h1 class="text-4xl font-bold product-title">{{ product.name }}</h1>
+      <h2 class="text-3xl font-medium text-primary mt-2 mb-4" *ngIf="displayPrice">
+        {{ displayPrice | currency }}
+      </h2>
       
-      <!-- Product Info Section<div class="stock-status">
-        <span *ngIf="product.totalStock === 0" class="badge badge-danger">Agotado</span>
-        <span *ngIf="product.lowStock && product.totalStock > 0" class="badge badge-warning">Poco stock ({{ product.totalStock }})</span>
-      </div> -->
-
       <p class="text-muted description" *ngIf="product.description">
         {{ product.description }}
       </p>

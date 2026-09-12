@@ -58,6 +58,12 @@ export class ProductDetailPageComponent implements OnInit {
     this.selectedVariant = variant;
   }
 
+  get displayPrice(): number | null {
+    if (this.selectedVariant) return this.selectedVariant.salePrice;
+    if (this.product && this.product.variants.length > 0) return this.product.variants[0].salePrice;
+    return null;
+  }
+
   addToCart(): void {
     if (!this.product || !this.selectedVariant) return;
     this.cartService.addToCart(this.product, this.selectedVariant, 1);

@@ -28,11 +28,9 @@
 
   <div class="variant-result" *ngIf="selectedColor && selectedSize">
     <ng-container *ngIf="selectedVariant; else notFound">
-      <div class="price font-bold text-2xl">
-        {{ selectedVariant.salePrice | currency }}
-      </div>
-      <p class="stock-info" [class.text-danger]="selectedVariant.stock === 0">
-        {{ selectedVariant.stock > 0 ? selectedVariant.stock + ' disponibles' : 'Agotado' }}
+
+      <p class="stock-info text-danger" *ngIf="selectedVariant.stock === 0">
+        Agotado
       </p>
     </ng-container>
     <ng-template #notFound>
