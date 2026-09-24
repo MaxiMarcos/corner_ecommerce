@@ -45,29 +45,39 @@
               <p class="text-muted">Manzana 67, Lote 3 (Local N°2), Barrio Docta</p>
             </div>
           </label>
-          <label class="radio-label">
+
+          <label class="radio-label" *ngIf="shippingOptions.length === 0">
             <input type="radio" formControlName="deliveryMethod" value="HOME_DELIVERY">
             <div class="radio-content">
-              <strong>Envío a Domicilio</strong>
-              <p class="text-muted">A cargo del comprador</p>
+              <strong>Envío por Correo</strong>
+              <p class="text-muted">Ingresa tu código postal abajo para cotizar</p>
+            </div>
+          </label>
+
+          <label class="radio-label" *ngFor="let option of shippingOptions">
+            <input type="radio" formControlName="deliveryMethod" [value]="option.id">
+            <div class="radio-content">
+              <strong>{{ option.provider }} a {{ option.modality }}</strong>
+              <p class="text-muted">{{ option.estimatedDeliveryTime }} <span class="font-bold ml-2">{{ option.cost | currency }}</span></p>
             </div>
           </label>
         </div>
 
-        <div class="address-fields" *ngIf="checkoutForm.get('deliveryMethod')?.value === 'HOME_DELIVERY'">
+        <div class="address-fields" *ngIf="checkoutForm.get('deliveryMethod')?.value !== 'LOCAL_PICKUP'">
           <h3>Datos de Envío</h3>
-          <div class="form-group">
-            <label for="address">Dirección completa (Calle, número, piso/depto)</label>
-            <input type="text" id="address" formControlName="address" class="form-control" [class.is-invalid]="checkoutForm.get('address')?.invalid && checkoutForm.get('address')?.touched">
-          </div>
+          
           <div class="form-grid">
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label for="address">Dirección completa (Calle, número, piso/depto)</label>
+              <input type="text" id="address" formControlName="address" class="form-control" [class.is-invalid]="checkoutForm.get('address')?.invalid && checkoutForm.get('address')?.touched">
+            </div>
             <div class="form-group">
               <label for="city">Ciudad / Localidad</label>
               <input type="text" id="city" formControlName="city" class="form-control" [class.is-invalid]="checkoutForm.get('city')?.invalid && checkoutForm.get('city')?.touched">
             </div>
             <div class="form-group">
-              <label for="zipCode">Código Postal</label>
-              <input type="text" id="zipCode" formControlName="zipCode" class="form-control" [class.is-invalid]="checkoutForm.get('zipCode')?.invalid && checkoutForm.get('zipCode')?.touched">
+              <label for="zipCode">Código Postal <span *ngIf="isCalculatingShipping" class="text-primary text-sm ml-2">(Cotizando...)</span></label>
+              <input type="text" id="zipCode" formControlName="zipCode" class="form-control" [class.is-invalid]="checkoutForm.get('zipCode')?.invalid && checkoutForm.get('zipCode')?.touched" placeholder="Ej: 5000">
             </div>
           </div>
         </div>
