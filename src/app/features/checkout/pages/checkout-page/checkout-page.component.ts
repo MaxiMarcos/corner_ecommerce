@@ -100,7 +100,8 @@ export class CheckoutPageComponent implements OnInit {
         // Auto-select first option if we were on "HOME_DELIVERY" or similar
         const currentMethod = this.checkoutForm.get('deliveryMethod')?.value;
         if (currentMethod !== 'LOCAL_PICKUP' && options.length > 0) {
-          this.checkoutForm.get('deliveryMethod')?.setValue(options[0].id);
+          this.shippingCost = options[0].cost;
+          this.checkoutForm.get('deliveryMethod')?.setValue(options[0].id, { emitEvent: false });
         }
       },
       error: (err) => {
