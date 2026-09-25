@@ -86,6 +86,7 @@ export class CheckoutPageComponent implements OnInit {
     
     const request: ShippingCalculateRequestDto = {
       zipCode: zipCode,
+      subtotal: this.cartService.subtotalPrice(),
       items: this.cartService.cartItems().map(item => ({
         productVariantId: item.variant.id,
         quantity: item.quantity

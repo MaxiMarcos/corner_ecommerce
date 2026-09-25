@@ -1,3 +1,6 @@
+<div class="promo-banner-global" style="background-color: var(--primary, #850404); color: white; text-align: center; padding: 8px; font-size: 14px; font-weight: bold;">
+  ¡ENVÍO GRATIS en compras a partir de $100.000!
+</div>
 <header class="header">
   <div class="container header-content">
     <a routerLink="/" class="logo flex items-center gap-2">
@@ -36,6 +39,15 @@
           <a routerLink="/" [queryParams]="{categoria: 'selecciones', subcategoria: 'camisetas'}">Camisetas</a>
           <a routerLink="/" [queryParams]="{categoria: 'selecciones', subcategoria: 'shorts'}">Shorts</a>
           <a routerLink="/" [queryParams]="{categoria: 'selecciones', subcategoria: 'camperas'}">Camperas</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a class="dropdown-toggle" routerLink="/" [queryParams]="{keyword: 'niño'}">Niños</a>
+        <div class="dropdown-menu">
+          <a routerLink="/" [queryParams]="{keyword: 'niño', subcategoria: 'camisetas'}">Camisetas</a>
+          <a routerLink="/" [queryParams]="{keyword: 'niño', subcategoria: 'shorts'}">Shorts</a>
+          <a routerLink="/" [queryParams]="{keyword: 'niño', subcategoria: 'camperas'}">Camperas</a>
         </div>
       </div>
 

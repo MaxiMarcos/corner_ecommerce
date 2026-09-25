@@ -24,6 +24,16 @@ export class CartService {
     return this.cartItemsSignal().reduce((total, item) => total + (item.variant.salePrice * item.quantity), 0);
   });
 
+  freeShippingThreshold = 100000;
+
+  isFreeShipping = computed(() => {
+    return this.subtotalPrice() >= this.freeShippingThreshold;
+  });
+
+  amountForFreeShipping = computed(() => {
+    return Math.max(0, this.freeShippingThreshold - this.subtotalPrice());
+  });
+
   discountAmount = computed(() => {
     return this.totalItems() > 2 ? this.subtotalPrice() * 0.20 : 0;
   });

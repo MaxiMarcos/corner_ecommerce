@@ -18,6 +18,7 @@ export interface ShippingItemDto {
 
 export interface ShippingCalculateRequestDto {
   zipCode: string;
+  subtotal: number;
   items: ShippingItemDto[];
 }
 

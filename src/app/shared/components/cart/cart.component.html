@@ -10,6 +10,13 @@
       <p>No hay productos en el carrito.</p>
     </div>
 
+    <div class="cart-promo-banner" *ngIf="!cartService.isFreeShipping() && cartService.cartItems().length > 0" style="background-color: #f8f9fa; border-left: 4px solid var(--primary, #850404); padding: 10px; margin: 10px 15px; font-size: 0.9rem;">
+      ¡Agrega <strong>{{ cartService.amountForFreeShipping() | currency }}</strong> más para obtener <strong>ENVÍO GRATIS</strong>!
+    </div>
+    <div class="cart-promo-success" *ngIf="cartService.isFreeShipping() && cartService.cartItems().length > 0" style="background-color: #d4edda; border-left: 4px solid #28a745; color: #155724; padding: 10px; margin: 10px 15px; font-size: 0.9rem;">
+      🎉 ¡Felicidades! Tienes <strong>ENVÍO GRATIS</strong>.
+    </div>
+
     <div class="cart-items" *ngIf="cartService.cartItems().length > 0">
       <div class="cart-item" *ngFor="let item of cartService.cartItems()">
         <img [src]="item.product.imageUrl || 'assets/images/corner.jpg'" [alt]="item.product.name" class="item-img">
