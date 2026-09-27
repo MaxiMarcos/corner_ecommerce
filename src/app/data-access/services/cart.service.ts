@@ -24,7 +24,7 @@ export class CartService {
     return this.cartItemsSignal().reduce((total, item) => total + (item.variant.salePrice * item.quantity), 0);
   });
 
-  freeShippingThreshold = 100000;
+  freeShippingThreshold = 120000;
 
   isFreeShipping = computed(() => {
     return this.subtotalPrice() >= this.freeShippingThreshold;
