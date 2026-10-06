@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.indumentariacorner.com.ar/sitemap.xml

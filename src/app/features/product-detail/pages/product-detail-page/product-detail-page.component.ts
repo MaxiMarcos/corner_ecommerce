@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Title, Meta } from '@angular/platform-browser';
 import { ProductApiService } from '../../../../data-access/api/product-api.service';
 import { PaymentApiService } from '../../../../data-access/api/payment-api.service';
 import { CartService } from '../../../../data-access/services/cart.service';
@@ -19,6 +20,8 @@ export class ProductDetailPageComponent implements OnInit {
   private productService = inject(ProductApiService);
   private paymentService = inject(PaymentApiService);
   private cartService = inject(CartService);
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
 
   product: Product | null = null;
   isLoading = true;
@@ -45,6 +48,18 @@ export class ProductDetailPageComponent implements OnInit {
       next: (prod) => {
         this.product = prod;
         this.isLoading = false;
+        
+        // SEO: Set dynamic title and meta
+        const title = `${prod.name} - Indumentaria Corner`;
+        this.titleService.setTitle(title);
+        
+        const description = prod.description ? prod.description.substring(0, 150) + '...' : `Comprá ${prod.name} en Indumentaria Corner. Envíos a todo el país.`;
+        this.metaService.updateTag({ name: 'description', content: description });
+        this.metaService.updateTag({ property: 'og:title', content: title });
+        this.metaService.updateTag({ property: 'og:description', content: description });
+        if (prod.imageUrl) {
+          this.metaService.updateTag({ property: 'og:image', content: prod.imageUrl });
+        }
       },
       error: (err) => {
         console.error('Error loading product details', err);

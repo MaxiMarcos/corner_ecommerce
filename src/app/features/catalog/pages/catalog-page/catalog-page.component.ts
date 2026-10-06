@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title, Meta } from '@angular/platform-browser';
 import { ProductApiService } from '../../../../data-access/api/product-api.service';
 import { Product } from '../../../../data-access/models/product.model';
 import { ProductGridComponent } from '../../components/product-grid/product-grid.component';
@@ -16,6 +17,8 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
   private productService = inject(ProductApiService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
 
   products: Product[] = [];
   isLoading = true;
@@ -40,6 +43,17 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
       const categoryName = params['categoria'];
       const subCategoryName = params['subcategoria'];
       this.currentPage = params['page'] ? Number(params['page']) : 0;
+      
+      // Update SEO
+      let pageTitle = 'Indumentaria Corner | Fútbol y Estilo';
+      if (categoryName && subCategoryName) {
+        pageTitle = `${subCategoryName.toUpperCase()} - ${categoryName.toUpperCase()} | Indumentaria Corner`;
+      } else if (categoryName) {
+        pageTitle = `${categoryName.toUpperCase()} | Indumentaria Corner`;
+      } else if (keyword) {
+        pageTitle = `Búsqueda: ${keyword} | Indumentaria Corner`;
+      }
+      this.titleService.setTitle(pageTitle);
       
       this.loadProducts(keyword, categoryName, subCategoryName);
 
