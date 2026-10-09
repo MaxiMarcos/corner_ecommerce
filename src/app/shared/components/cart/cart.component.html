@@ -47,7 +47,7 @@
 
   <div class="cart-footer" *ngIf="cartService.cartItems().length > 0">
     <div class="total-row" style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border);">
-      <span>Total:</span>
+      <span style="font-size: 0.9rem; color: #666;">Subtotal (sin envío):</span>
       <span class="total-price">${{ cartService.subtotalPrice() | number }}</span>
     </div>
     
