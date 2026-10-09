@@ -7,7 +7,7 @@ import { PaymentApiService } from '../../../../data-access/api/payment-api.servi
 import { CartService } from '../../../../data-access/services/cart.service';
 import { Product, ProductVariant } from '../../../../data-access/models/product.model';
 import { VariantSelectorComponent } from '../../components/variant-selector/variant-selector.component';
-import { ProductGridComponent } from '../../components/product-grid/product-grid.component';
+import { ProductGridComponent } from '../../../catalog/components/product-grid/product-grid.component';
 
 @Component({
   selector: 'app-product-detail-page',
