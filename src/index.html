@@ -13,6 +13,17 @@
   <meta property="og:image" content="/assets/images/corner.jpg">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/jpeg" href="assets/images/corner.jpg">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6381597110"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    // We don't send the page_view here because Angular will handle it dynamically on route changes
+    gtag('config', 'G-6381597110', { send_page_view: false });
+  </script>
 </head>
 
 <body>

@@ -15,6 +15,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/checkout/pages/checkout-page/checkout-page.component').then(m => m.CheckoutPageComponent)
   },
   {
+    path: 'faq',
+    loadComponent: () => import('./features/faq/pages/faq-page/faq-page.component').then(m => m.FaqPageComponent)
+  },
+  {
     path: '**',
     redirectTo: ''
   }

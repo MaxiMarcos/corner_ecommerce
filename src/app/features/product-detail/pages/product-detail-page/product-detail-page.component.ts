@@ -1,22 +1,24 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
 import { ProductApiService } from '../../../../data-access/api/product-api.service';
 import { PaymentApiService } from '../../../../data-access/api/payment-api.service';
 import { CartService } from '../../../../data-access/services/cart.service';
 import { Product, ProductVariant } from '../../../../data-access/models/product.model';
 import { VariantSelectorComponent } from '../../components/variant-selector/variant-selector.component';
+import { ProductGridComponent } from '../../components/product-grid/product-grid.component';
 
 @Component({
   selector: 'app-product-detail-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, VariantSelectorComponent],
+  imports: [CommonModule, RouterModule, VariantSelectorComponent, ProductGridComponent],
   templateUrl: './product-detail-page.component.html',
   styleUrl: './product-detail-page.component.css'
 })
 export class ProductDetailPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private productService = inject(ProductApiService);
   private paymentService = inject(PaymentApiService);
   private cartService = inject(CartService);
@@ -24,11 +26,13 @@ export class ProductDetailPageComponent implements OnInit {
   private metaService = inject(Meta);
 
   product: Product | null = null;
+  relatedProducts: Product[] = [];
   isLoading = true;
   error = false;
   selectedVariant: ProductVariant | null = null;
 
   ngOnInit(): void {
+    // Escuchar los cambios de la URL, para que si hacen click en un producto relacionado, recargue todo
     this.route.paramMap.subscribe(params => {
       const slugOrId = params.get('id');
       if (slugOrId) {
@@ -43,7 +47,12 @@ export class ProductDetailPageComponent implements OnInit {
   private loadProduct(id: number): void {
     this.isLoading = true;
     this.error = false;
+    this.product = null;
+    this.relatedProducts = [];
     
+    // Scroll arriba
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     this.productService.getProductById(id).subscribe({
       next: (prod) => {
         this.product = prod;
@@ -60,6 +69,8 @@ export class ProductDetailPageComponent implements OnInit {
         if (prod.imageUrl) {
           this.metaService.updateTag({ property: 'og:image', content: prod.imageUrl });
         }
+
+        this.loadRelatedProducts(prod);
       },
       error: (err) => {
         console.error('Error loading product details', err);
@@ -67,6 +78,48 @@ export class ProductDetailPageComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  private loadRelatedProducts(prod: Product): void {
+    // Stop words that are generic clothing terms
+    const stopWords = ['camiseta', 'camisetas', 'short', 'shorts', 'buzo', 'buzos', 'campera', 'camperas', 'joggins', 'pantalon', 'medias', 'conjunto', 'titular', 'suplente', 'niño', 'niños', 'seleccion', 'equipo'];
+    
+    // Find the first meaningful word in the product name
+    const words = prod.name.toLowerCase().split(/\s+/);
+    let keywordToSearch = '';
+    
+    for (const word of words) {
+      // Remove punctuation
+      const cleanWord = word.replace(/[^\w\sáéíóúñ]/g, '');
+      if (cleanWord.length > 2 && !stopWords.includes(cleanWord)) {
+        keywordToSearch = cleanWord;
+        break; // found the primary keyword (e.g. "Boca", "River", "Argentina")
+      }
+    }
+
+    // Try fetching by keyword first
+    if (keywordToSearch) {
+      this.productService.getProducts(0, 5, keywordToSearch).subscribe(res => {
+        // Filter out the current product
+        let related = res.content.filter(p => p.id !== prod.id);
+        
+        // If we didn't get enough results (less than 4), fill with products from same category
+        if (related.length < 4) {
+          this.productService.getProductsByCategory(prod.categoryId).subscribe(catProducts => {
+            const catFiltered = catProducts.filter(p => p.id !== prod.id && !related.find(r => r.id === p.id));
+            related = [...related, ...catFiltered].slice(0, 4);
+            this.relatedProducts = related;
+          });
+        } else {
+          this.relatedProducts = related.slice(0, 4);
+        }
+      });
+    } else {
+      // Fallback if no keyword was found
+      this.productService.getProductsByCategory(prod.categoryId).subscribe(catProducts => {
+        this.relatedProducts = catProducts.filter(p => p.id !== prod.id).slice(0, 4);
+      });
+    }
   }
 
   onVariantSelected(variant: ProductVariant | null): void {

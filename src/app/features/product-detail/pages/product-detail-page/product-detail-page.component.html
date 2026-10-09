@@ -60,3 +60,9 @@
     </div>
   </div>
 </div>
+
+<!-- Productos Relacionados -->
+<div *ngIf="relatedProducts && relatedProducts.length > 0" class="related-products-section" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(0,0,0,0.1);">
+  <h3 class="text-3xl font-bold mb-6 text-center" style="color: var(--primary);">También te puede interesar</h3>
+  <app-product-grid [products]="relatedProducts"></app-product-grid>
+</div>
