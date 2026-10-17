@@ -1,0 +1,200 @@
+<div class="modal-backdrop" *ngIf="isOpen" (click)="onClose()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="title-wrap">
+        <svg class="icon-ruler" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.3 15.3l-6.6-6.6a2 2 0 0 0-2.8 0L2.7 17.9a2 2 0 0 0 0 2.8l.6.6a2 2 0 0 0 2.8 0l9.2-9.2 1.4 1.4-1.4 1.4 1.4 1.4 1.4-1.4 1.4 1.4-1.4 1.4 1.4 1.4 2.8-2.8z"/>
+        </svg>
+        <h3>Guía de Talles y Medidas</h3>
+      </div>
+      <button type="button" class="close-btn" (click)="onClose()" aria-label="Cerrar modal">&times;</button>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="tabs-bar">
+      <button 
+        type="button" 
+        class="tab-btn" 
+        [class.active]="activeTab === 'camisetas'" 
+        (click)="setTab('camisetas')">
+        👕 Camisetas
+      </button>
+      <button 
+        type="button" 
+        class="tab-btn" 
+        [class.active]="activeTab === 'buzos'" 
+        (click)="setTab('buzos')">
+        🧥 Buzos / Camperas
+      </button>
+      <button 
+        type="button" 
+        class="tab-btn" 
+        [class.active]="activeTab === 'shorts'" 
+        (click)="setTab('shorts')">
+        🩳 Shorts
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      
+      <!-- CAMISETAS -->
+      <div *ngIf="activeTab === 'camisetas'" class="tab-content">
+        <div class="table-responsive">
+          <table class="size-table">
+            <thead>
+              <tr>
+                <th>Talle</th>
+                <th>Ancho de Sisa (Axila a Axila)</th>
+                <th>Largo Total (Hombro a Ruedo)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>S</strong></td>
+                <td>50 cm</td>
+                <td>70 cm</td>
+              </tr>
+              <tr>
+                <td><strong>M</strong></td>
+                <td>52 cm</td>
+                <td>72 cm</td>
+              </tr>
+              <tr>
+                <td><strong>L</strong></td>
+                <td>54 cm</td>
+                <td>74 cm</td>
+              </tr>
+              <tr>
+                <td><strong>XL</strong></td>
+                <td>57 cm</td>
+                <td>77 cm</td>
+              </tr>
+              <tr>
+                <td><strong>XXL</strong></td>
+                <td>60 cm</td>
+                <td>80 cm</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BUZOS / CAMPERAS -->
+      <div *ngIf="activeTab === 'buzos'" class="tab-content">
+        <div class="table-responsive">
+          <table class="size-table">
+            <thead>
+              <tr>
+                <th>Talle</th>
+                <th>Ancho (Axila a Axila)</th>
+                <th>Largo Total</th>
+                <th>Largo de Manga</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>S</strong></td>
+                <td>53 cm</td>
+                <td>68 cm</td>
+                <td>63 cm</td>
+              </tr>
+              <tr>
+                <td><strong>M</strong></td>
+                <td>56 cm</td>
+                <td>71 cm</td>
+                <td>65 cm</td>
+              </tr>
+              <tr>
+                <td><strong>L</strong></td>
+                <td>59 cm</td>
+                <td>74 cm</td>
+                <td>67 cm</td>
+              </tr>
+              <tr>
+                <td><strong>XL</strong></td>
+                <td>62 cm</td>
+                <td>77 cm</td>
+                <td>69 cm</td>
+              </tr>
+              <tr>
+                <td><strong>XXL</strong></td>
+                <td>65 cm</td>
+                <td>80 cm</td>
+                <td>71 cm</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SHORTS -->
+      <div *ngIf="activeTab === 'shorts'" class="tab-content">
+        <div class="table-responsive">
+          <table class="size-table">
+            <thead>
+              <tr>
+                <th>Talle</th>
+                <th>Cintura (Elástico sin estirar)</th>
+                <th>Cintura (Elástico estirado)</th>
+                <th>Largo Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>S</strong></td>
+                <td>34 cm</td>
+                <td>48 cm</td>
+                <td>42 cm</td>
+              </tr>
+              <tr>
+                <td><strong>M</strong></td>
+                <td>36 cm</td>
+                <td>51 cm</td>
+                <td>44 cm</td>
+              </tr>
+              <tr>
+                <td><strong>L</strong></td>
+                <td>38 cm</td>
+                <td>54 cm</td>
+                <td>46 cm</td>
+              </tr>
+              <tr>
+                <td><strong>XL</strong></td>
+                <td>40 cm</td>
+                <td>57 cm</td>
+                <td>48 cm</td>
+              </tr>
+              <tr>
+                <td><strong>XXL</strong></td>
+                <td>42 cm</td>
+                <td>60 cm</td>
+                <td>50 cm</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tip de medición -->
+      <div class="measure-tip">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text">
+          <strong>¿Cómo medir tu prenda?</strong>
+          <p>
+            Te sugerimos apoyar una prenda tuya sobre una superficie plana y medirla con un centímetro de costura o regla. Las medidas son aproximadas y pueden variar +/- 1 cm.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button type="button" class="btn-understand" (click)="onClose()">Entendido</button>
+    </div>
+
+  </div>
+</div>

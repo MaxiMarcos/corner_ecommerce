@@ -113,6 +113,29 @@ export class CheckoutPageComponent implements OnInit {
     });
   }
 
+  get shippingStatus(): { text: string; isFree: boolean; isPendingZip: boolean } {
+    const subtotal = this.cartService.subtotalPrice();
+    const method = this.checkoutForm.get('deliveryMethod')?.value;
+
+    if (method === 'LOCAL_PICKUP') {
+      return { text: 'Gratis (Retiro en local)', isFree: true, isPendingZip: false };
+    }
+
+    if (subtotal >= 120000) {
+      return { text: '¡Gratis! (Envío bonificado)', isFree: true, isPendingZip: false };
+    }
+
+    if (this.shippingCost > 0) {
+      return { text: '', isFree: false, isPendingZip: false };
+    }
+
+    if (this.isCalculatingShipping) {
+      return { text: 'Cotizando...', isFree: false, isPendingZip: true };
+    }
+
+    return { text: 'Ingresá tu CP abajo', isFree: false, isPendingZip: true };
+  }
+
   get totalWithShipping(): number {
     return this.cartService.subtotalPrice() + this.shippingCost;
   }
@@ -123,11 +146,17 @@ export class CheckoutPageComponent implements OnInit {
       return;
     }
 
+    const formValues = this.checkoutForm.value;
+
+    if (formValues.deliveryMethod === 'HOME_DELIVERY') {
+      alert('Por favor ingresá tu código postal para calcular las opciones de envío disponibles.');
+      return;
+    }
+
     if (this.cartService.cartItems().length === 0) return;
 
     this.isProcessingPayment = true;
 
-    const formValues = this.checkoutForm.value;
     const paymentItems = this.cartService.cartItems().map(item => ({
       productVariantId: item.variant.id,
       quantity: item.quantity
@@ -140,9 +169,9 @@ export class CheckoutPageComponent implements OnInit {
       buyerEmail: formValues.buyerEmail,
       buyerPhone: formValues.buyerPhone,
       deliveryMethod: formValues.deliveryMethod,
-      address: formValues.deliveryMethod === 'HOME_DELIVERY' ? formValues.address : null,
-      city: formValues.deliveryMethod === 'HOME_DELIVERY' ? formValues.city : null,
-      zipCode: formValues.deliveryMethod === 'HOME_DELIVERY' ? formValues.zipCode : null
+      address: formValues.deliveryMethod !== 'LOCAL_PICKUP' ? formValues.address : null,
+      city: formValues.deliveryMethod !== 'LOCAL_PICKUP' ? formValues.city : null,
+      zipCode: formValues.deliveryMethod !== 'LOCAL_PICKUP' ? formValues.zipCode : null
     };
 
     this.paymentService.createPreference(request).subscribe({

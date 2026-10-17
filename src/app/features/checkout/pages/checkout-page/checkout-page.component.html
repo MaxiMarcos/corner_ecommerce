@@ -110,8 +110,16 @@
         
         <div class="total-row">
           <span>Envío</span>
-          <span *ngIf="shippingCost > 0">{{ shippingCost | currency }}</span>
-          <span *ngIf="shippingCost === 0">A convenir</span>
+          <span *ngIf="shippingCost > 0 && cartService.subtotalPrice() < 120000" class="font-semibold">
+            {{ shippingCost | currency }}
+          </span>
+          <span *ngIf="shippingCost === 0 || cartService.subtotalPrice() >= 120000" 
+                [ngClass]="{
+                  'shipping-badge-free': shippingStatus.isFree,
+                  'shipping-pending': shippingStatus.isPendingZip
+                }">
+            {{ shippingStatus.text }}
+          </span>
         </div>
         
         <div class="total-row grand-total">

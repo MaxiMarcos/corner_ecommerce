@@ -192,6 +192,17 @@
   padding: var(--spacing-2) 0;
 }
 
+.shipping-badge-free {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.shipping-pending {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
 .grand-total {
   border-top: 2px solid var(--bg-tertiary);
   margin-top: var(--spacing-2);

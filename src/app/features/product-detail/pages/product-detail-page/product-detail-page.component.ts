@@ -5,14 +5,14 @@ import { Title, Meta } from '@angular/platform-browser';
 import { ProductApiService } from '../../../../data-access/api/product-api.service';
 import { PaymentApiService } from '../../../../data-access/api/payment-api.service';
 import { CartService } from '../../../../data-access/services/cart.service';
-import { Product, ProductVariant } from '../../../../data-access/models/product.model';
 import { VariantSelectorComponent } from '../../components/variant-selector/variant-selector.component';
 import { ProductGridComponent } from '../../../catalog/components/product-grid/product-grid.component';
+import { SizeGuideModalComponent } from '../../components/size-guide-modal/size-guide-modal.component';
 
 @Component({
   selector: 'app-product-detail-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, VariantSelectorComponent, ProductGridComponent],
+  imports: [CommonModule, RouterModule, VariantSelectorComponent, ProductGridComponent, SizeGuideModalComponent],
   templateUrl: './product-detail-page.component.html',
   styleUrl: './product-detail-page.component.css'
 })
@@ -30,6 +30,14 @@ export class ProductDetailPageComponent implements OnInit {
   isLoading = true;
   error = false;
   selectedVariant: ProductVariant | null = null;
+
+  // Multi-image gallery state
+  imagesList: string[] = [];
+  selectedImageIndex = 0;
+
+  // Size guide modal state
+  isSizeGuideOpen = false;
+  sizeGuideCategory: 'camisetas' | 'shorts' | 'buzos' = 'camisetas';
 
   ngOnInit(): void {
     // Escuchar los cambios de la URL, para que si hacen click en un producto relacionado, recargue todo
@@ -58,6 +66,29 @@ export class ProductDetailPageComponent implements OnInit {
         this.product = prod;
         this.isLoading = false;
         
+        // Process multi-images list
+        if (prod.imageUrl && prod.imageUrl.trim()) {
+          this.imagesList = prod.imageUrl.split(',').map(u => u.trim()).filter(u => u.length > 0);
+        } else {
+          this.imagesList = ['assets/images/corner.jpg'];
+        }
+        this.selectedImageIndex = 0;
+
+        // Auto-detect garment type for Size Guide (prioritizing subCategory, then category, then name)
+        const subCat = (prod.subCategoryName || '').toLowerCase();
+        const cat = (prod.categoryName || '').toLowerCase();
+        const nameLower = (prod.name || '').toLowerCase();
+        const searchContext = `${subCat} ${cat} ${nameLower}`;
+
+        if (searchContext.includes('short') || searchContext.includes('bermuda')) {
+          this.sizeGuideCategory = 'shorts';
+        } else if (searchContext.includes('buzo') || searchContext.includes('campera') || searchContext.includes('hoodie') || searchContext.includes('abrigo')) {
+          this.sizeGuideCategory = 'buzos';
+        } else {
+          // Default to camisetas (covers "Camisetas", "Boca 2026", "Retro", etc.)
+          this.sizeGuideCategory = 'camisetas';
+        }
+
         // SEO: Set dynamic title and meta
         const title = `${prod.name} - Indumentaria Corner`;
         this.titleService.setTitle(title);
@@ -66,8 +97,8 @@ export class ProductDetailPageComponent implements OnInit {
         this.metaService.updateTag({ name: 'description', content: description });
         this.metaService.updateTag({ property: 'og:title', content: title });
         this.metaService.updateTag({ property: 'og:description', content: description });
-        if (prod.imageUrl) {
-          this.metaService.updateTag({ property: 'og:image', content: prod.imageUrl });
+        if (this.imagesList.length > 0) {
+          this.metaService.updateTag({ property: 'og:image', content: this.imagesList[0] });
         }
 
         this.loadRelatedProducts(prod);
@@ -137,10 +168,28 @@ export class ProductDetailPageComponent implements OnInit {
     this.cartService.addToCart(this.product, this.selectedVariant, 1);
   }
 
+  get currentImage(): string {
+    if (this.imagesList.length === 0) return 'assets/images/corner.jpg';
+    return this.imagesList[this.selectedImageIndex] || this.imagesList[0];
+  }
+
+  selectImage(index: number): void {
+    if (index >= 0 && index < this.imagesList.length) {
+      this.selectedImageIndex = index;
+    }
+  }
+
+  openSizeGuide(): void {
+    this.isSizeGuideOpen = true;
+  }
+
+  closeSizeGuide(): void {
+    this.isSizeGuideOpen = false;
+  }
+
   openWhatsApp(): void {
     if (!this.product || !this.selectedVariant) return;
 
-    const phoneNumber = '5493515637590';
     const exactNumber = '5493515637590';
     const message = `Hola! Me interesa comprar el producto *${this.product.name}*\n- Talle: ${this.selectedVariant.size}\n- Color: ${this.selectedVariant.color}\n- Precio: $${this.selectedVariant.salePrice}`;
     const encodedMessage = encodeURIComponent(message);

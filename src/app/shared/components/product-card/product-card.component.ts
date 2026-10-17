@@ -23,6 +23,12 @@ export class ProductCardComponent {
     return Math.max(...this.product.variants.map(v => v.salePrice));
   }
 
+  get primaryImageUrl(): string {
+    if (!this.product?.imageUrl) return 'assets/images/corner.jpg';
+    const first = this.product.imageUrl.split(',')[0].trim();
+    return first || 'assets/images/corner.jpg';
+  }
+
   get productSlug(): string {
     if (!this.product || !this.product.name) return `${this.product.id}`;
     const slug = this.product.name.toLowerCase()

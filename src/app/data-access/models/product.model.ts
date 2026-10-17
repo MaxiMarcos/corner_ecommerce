@@ -15,6 +15,9 @@ export interface Product {
   totalStock: number;
   lowStock: boolean;
   categoryId: number;
+  categoryName?: string;
+  subCategoryId?: number;
+  subCategoryName?: string;
   supplierId: number;
   variants: ProductVariant[];
 }
