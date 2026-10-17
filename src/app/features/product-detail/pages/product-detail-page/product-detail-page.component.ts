@@ -5,6 +5,7 @@ import { Title, Meta } from '@angular/platform-browser';
 import { ProductApiService } from '../../../../data-access/api/product-api.service';
 import { PaymentApiService } from '../../../../data-access/api/payment-api.service';
 import { CartService } from '../../../../data-access/services/cart.service';
+import { Product, ProductVariant } from '../../../../data-access/models/product.model';
 import { VariantSelectorComponent } from '../../components/variant-selector/variant-selector.component';
 import { ProductGridComponent } from '../../../catalog/components/product-grid/product-grid.component';
 import { SizeGuideModalComponent } from '../../components/size-guide-modal/size-guide-modal.component';
