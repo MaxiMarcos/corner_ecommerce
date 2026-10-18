@@ -18,6 +18,12 @@ export class CartComponent {
 
   isProcessingPayment = false;
 
+  getProductImage(imageUrl?: string): string {
+    if (!imageUrl) return 'assets/images/corner.jpg';
+    const first = imageUrl.split(',')[0].trim();
+    return first || 'assets/images/corner.jpg';
+  }
+
   checkout(): void {
     const items = this.cartService.cartItems();
     if (items.length === 0) return;

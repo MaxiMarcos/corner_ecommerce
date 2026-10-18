@@ -90,7 +90,7 @@
       <h2>Resumen de Compra</h2>
       <div class="summary-items">
         <div class="summary-item" *ngFor="let item of cartService.cartItems()">
-          <img [src]="item.product.imageUrl || 'assets/images/corner.jpg'" [alt]="item.product.name" class="summary-item-img">
+          <img [src]="getProductImage(item.product.imageUrl)" [alt]="item.product.name" class="summary-item-img">
           <div class="summary-item-details">
             <h4>{{ item.product.name }}</h4>
             <p class="text-muted text-sm">Talle: {{ item.variant.size }} | Color: {{ item.variant.color }}</p>

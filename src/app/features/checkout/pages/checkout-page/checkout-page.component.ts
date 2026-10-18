@@ -136,6 +136,12 @@ export class CheckoutPageComponent implements OnInit {
     return { text: 'Ingresá tu CP abajo', isFree: false, isPendingZip: true };
   }
 
+  getProductImage(imageUrl?: string): string {
+    if (!imageUrl) return 'assets/images/corner.jpg';
+    const first = imageUrl.split(',')[0].trim();
+    return first || 'assets/images/corner.jpg';
+  }
+
   get totalWithShipping(): number {
     return this.cartService.subtotalPrice() + this.shippingCost;
   }
